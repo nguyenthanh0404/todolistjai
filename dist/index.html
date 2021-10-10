@@ -43,7 +43,7 @@
 		<input type="text" name="Task" placeholder="Task" id="InputTask">
 		<!-- -->
 		<!-- <input id="item1" type="checkbox" class="addPending"> -->
-	  <!-- <label id="lbitem1" for="item1" class="addPending">Create a to-do list <a class="lbdelete" onclick="fdelete(this)">Delete</a><a class="lbdelete">/</a><a class="lbmove" onclick="fmove(this)">Move</a></label> -->
+	  <!-- <label id="lbitem1" for="item1" class="addPending s2">Create a to-do list <a class="lbdelete" onclick="fdelete(this)">Delete</a><a class="lbdelete">/</a><a class="lbmove" onclick="fmove(this)">Move</a></label> -->
 		<h2 class="urgent">1.Urgent</h2>
 		<h2 class="pending">3.Pending</h2>	
 		<h2 class="schedule">5.Scheduled</h2>
@@ -84,8 +84,9 @@
 	count = 1;
   window.addEventListener("keydown", function (e) { if (13 == e.keyCode) { 
 		// get value input
-	    x = document.getElementById("InputTask").value;
-	    priorityTask = x.substring(0, 1); 
+	    a = document.getElementById("InputTask").value;
+	    priorityTask = a.substring(0, 1); 
+	    x = a.substring(2); 
 		//create Input element
 	    var inputTask = document.createElement("INPUT");
 	    inputTask.setAttribute("id", "item"+count);
@@ -95,7 +96,7 @@
 		//create Label element
 	    var labelTask = document.createElement("LABEL");
 	    labelTask.setAttribute("for", "item"+count);
-			labelTask.setAttribute("class", "addPending");
+			labelTask.setAttribute("class", "addPending s"+priorityTask);
 			labelTask.setAttribute("id", "lbitem1");
 			//create a Delete
 			var deleteTask = document.createElement("A");

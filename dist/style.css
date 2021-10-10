@@ -151,6 +151,12 @@ body {
   left: 10px;
   top: 8px;
 }
+.todoList label.s1{
+  color: red;
+}
+.todoList label.s2{
+  color: orange;
+}
 
 .lbdelete {
   float: right;
