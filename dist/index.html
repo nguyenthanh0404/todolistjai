@@ -96,6 +96,7 @@
 	    var labelTask = document.createElement("LABEL");
 	    labelTask.setAttribute("for", "item"+count);
 			labelTask.setAttribute("class", "addPending");
+			labelTask.setAttribute("id", "lbitem1");
 			//create a Delete
 			var deleteTask = document.createElement("A");
 	    deleteTask.setAttribute("onclick", "fdelete(this)");
@@ -128,7 +129,6 @@
 			count  += 1;
 
 
-			alert(priorityTask);
 	} });
 
   
