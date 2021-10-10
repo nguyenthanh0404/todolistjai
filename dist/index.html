@@ -11,12 +11,14 @@
 <div class="todoList">
   <h1>My To-Do List</h1>
   <div class="items" id="items">
-	<input type="text" name="Task" placeholder="Task" id="InputTask">
-	<h2 class="urgent">1.Urgent</h2>
-	<h2 class="pending">3.Pending</h2>	
-	<h2 class="schedule">5.Scheduled</h2>
-    <h2 class="done">7.Done</h2>
-    
+		<input type="text" name="Task" placeholder="Task" id="InputTask">
+		<!-- -->
+		<!-- <input id="item1" type="checkbox" class="addPending"> -->
+	  <!-- <label id="lbitem1" for="item1" class="addPending">Create a to-do list <a class="lbdelete" onclick="fdelete(this)">Delete</a><a class="lbdelete">/</a><a class="lbmove" onclick="fmove(this)">Move</a></label> -->
+		<h2 class="urgent">1.Urgent</h2>
+		<h2 class="pending">3.Pending</h2>	
+		<h2 class="schedule">5.Scheduled</h2>
+	  <h2 class="done">7.Done</h2>
   </div>
 </div>
 <!-- partial -->
@@ -44,48 +46,55 @@
 	//bien item id
 	count = 1;
   window.addEventListener("keydown", function (e) { if (13 == e.keyCode) { 
-	// get value input
-    x = document.getElementById("InputTask").value;
-	//create Input element
-    var inputTask = document.createElement("INPUT");
-    inputTask.setAttribute("id", "item"+count);
-    inputTask.setAttribute("type", "checkbox");
-    inputTask.setAttribute("class", "addPending");	
-    document.getElementById("items").appendChild(inputTask);
-	//create Label element
-    var labelTask = document.createElement("LABEL");
-    labelTask.setAttribute("for", "item"+count);
-		labelTask.setAttribute("class", "addPending");
-		//create a Delete
-		var deleteTask = document.createElement("A");
-    deleteTask.setAttribute("onclick", "fdelete(this)");
-		deleteTask.setAttribute("class", "lbdelete");
-		var textnodeDelete = document.createTextNode("Delete");
-		deleteTask.appendChild(textnodeDelete);
-		//create a dot
-		var dotTask = document.createElement("A");
-		dotTask.setAttribute("class", "lbdelete");
-		var textnodeDot = document.createTextNode("/");
-		dotTask.appendChild(textnodeDot);	
-		//create a Move
-		var moveTask = document.createElement("A");
-    moveTask.setAttribute("onclick", "fmove(this)");
-		moveTask.setAttribute("class", "lbmove");
-		var textnodeMove = document.createTextNode("Move");
-		moveTask.appendChild(textnodeMove);	
-    var textnode = document.createTextNode(x);
-    //add Label alement
-    labelTask.appendChild(textnode);
-    labelTask.appendChild(deleteTask);
-    labelTask.appendChild(dotTask);
-    labelTask.appendChild(moveTask);
-    document.getElementById("items").appendChild(labelTask);
-   //create a Delete
+		// get value input
+	    x = document.getElementById("InputTask").value;
+	    priorityTask = x..substring(0, 1); 
+		//create Input element
+	    var inputTask = document.createElement("INPUT");
+	    inputTask.setAttribute("id", "item"+count);
+	    inputTask.setAttribute("type", "checkbox");
+	    inputTask.setAttribute("class", "addPending");	
+	    document.getElementById("items").appendChild(inputTask);
+		//create Label element
+	    var labelTask = document.createElement("LABEL");
+	    labelTask.setAttribute("for", "item"+count);
+			labelTask.setAttribute("class", "addPending");
+			//create a Delete
+			var deleteTask = document.createElement("A");
+	    deleteTask.setAttribute("onclick", "fdelete(this)");
+			deleteTask.setAttribute("class", "lbdelete");
+			var textnodeDelete = document.createTextNode("Delete");
+			deleteTask.appendChild(textnodeDelete);
+			//create a dot
+			var dotTask = document.createElement("A");
+			dotTask.setAttribute("class", "lbdelete");
+			var textnodeDot = document.createTextNode("/");
+			dotTask.appendChild(textnodeDot);	
+			//create a Move
+			var moveTask = document.createElement("A");
+	    moveTask.setAttribute("onclick", "fmove(this)");
+			moveTask.setAttribute("class", "lbmove");
+			var textnodeMove = document.createTextNode("Move");
+			moveTask.appendChild(textnodeMove);	
+	    var textnode = document.createTextNode(x);
+	    //add Label alement
+	    labelTask.appendChild(textnode);
+	    labelTask.appendChild(deleteTask);
+	    labelTask.appendChild(dotTask);
+	    labelTask.appendChild(moveTask);
+	    document.getElementById("items").appendChild(labelTask);
+	   //create a Delete
 
 
-	//clear input task
-	document.getElementById("InputTask").value = "";
-	count  += 1;
-  } });
+			//clear input task
+			document.getElementById("InputTask").value = "";
+			count  += 1;
+
+
+			alert(priorityTask);
+	} });
+
+  
+
 </script>
 </html>
