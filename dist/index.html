@@ -13,7 +13,7 @@
   <div class="items" id="items">
 	<input type="text" name="Task" placeholder="Task" id="InputTask">
     <input id="item1" type="checkbox" class="addPending">
-    <label id="item1" for="item1" class="addPending">Create a to-do list <a class="lbdelete" onclick="fdelete(this)">Delete</a><a class="lbdelete">/</a><a class="lbmove" onclick="fmove(this)">Move</a></label>
+    <label for="item1" class="addPending">Create a to-do list <a class="lbdelete" onclick="fdelete(this)">Delete</a><a class="lbdelete">/</a><a class="lbmove" onclick="fmove(this)">Move</a></label>
 
 	<h2 class="urgent">1.Urgent</h2>
 	<h2 class="pending">3.Pending</h2>	
@@ -49,10 +49,33 @@
 	//create Label element
     var labelTask = document.createElement("LABEL");
     labelTask.setAttribute("for", "item"+count);
-	labelTask.setAttribute("class", "addPending");
+		labelTask.setAttribute("class", "addPending");
+		//create a Delete
+		var deleteTask = document.createElement("A");
+    deleteTask.setAttribute("onclick", "fdelete(this)");
+		deleteTask.setAttribute("class", "lbdelete");
+		var textnodeDelete = document.createTextNode("Delete");
+		deleteTask.appendChild(textnodeDelete);
+		//create a dot
+		var dotTask = document.createElement("A");
+		dotTask.setAttribute("class", "lbdelete");
+		var textnodeDot = document.createTextNode("/");
+		dotTask.appendChild(textnodeDot);	
+		//create a Move
+		var moveTask = document.createElement("A");
+    moveTask.setAttribute("onclick", "fmove(this)");
+		moveTask.setAttribute("class", "lbmove");
+		var textnodeMove = document.createTextNode("Move");
+		moveTask.appendChild(textnodeMove);	
     var textnode = document.createTextNode(x);
-    labelTask.appendChild(textnode);	
+    //add Label alement
+    labelTask.appendChild(textnode);
+    labelTask.appendChild(deleteTask);
+    labelTask.appendChild(dotTask);
+    labelTask.appendChild(moveTask);
     document.getElementById("items").appendChild(labelTask);
+   //create a Delete
+
 
 	//clear input task
 	document.getElementById("InputTask").value = "";
