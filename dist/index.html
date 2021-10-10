@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - To-Do List by pure CSS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="todoList">
+  <h1>My To-Do List</h1>
+  <div class="items" id="items">
+	<input type="text" name="Task" placeholder="Task" id="InputTask">
+    <input id="item1" type="checkbox" class="addPending">
+    <label id="item1" for="item1" class="addPending">Create a to-do list <a class="lbdelete" onclick="fdelete(this)">Delete</a><a class="lbdelete">/</a><a class="lbmove" onclick="fmove(this)">Move</a></label>
+
+	
+	<h2 class="urgent">1.Urgent</h2>
+	<h2 class="pending">3.Pending</h2>	
+	<h2 class="schedule">5.Scheduled</h2>
+    <h2 class="done">7.Done</h2>
+	<h2 class="delete">9.Deleted</h2>
+    
+  </div>
+</div>
+<!-- partial -->
+  
+</body>
+<script>
+	function fdelete(obj) {		
+		document.getElementById(obj.parentNode.id).classList.add("deleteTask");
+		document.getElementById(obj.parentNode.id).classList.remove("addPending");
+		obj.parentNode.classList.add("deleteTask");
+		obj.parentNode.classList.remove("addPending");		
+	} 
+</script>
+<script>
+	//bien item id
+	count = 2;
+  window.addEventListener("keydown", function (e) { if (13 == e.keyCode) { 
+	// get value input
+    x = document.getElementById("InputTask").value;
+	//create Input element
+    var inputTask = document.createElement("INPUT");
+    inputTask.setAttribute("id", "item"+count);
+    inputTask.setAttribute("type", "checkbox");
+    inputTask.setAttribute("class", "addPending");	
+    document.getElementById("items").appendChild(inputTask);
+	//create Label element
+    var labelTask = document.createElement("LABEL");
+    labelTask.setAttribute("for", "item"+count);
+	labelTask.setAttribute("class", "addPending");
+    var textnode = document.createTextNode(x);
+    labelTask.appendChild(textnode);	
+    document.getElementById("items").appendChild(labelTask);
+
+	//clear input task
+	document.getElementById("InputTask").value = "";
+	count  += 1;
+  } });
+</script>
+</html>
