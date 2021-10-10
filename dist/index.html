@@ -57,8 +57,8 @@
   <div class="modal-content">    
     <div>Move to</div><p id="savedValue"></p>
 	<button type="button" class="btn btn-danger" onclick="fUrgentClick(this)">Urgent</button>
-	<button type="button" class="btn btn-primary">Pending</button>
-	<button type="button" class="btn btn-secondary">Scheduled</button>
+	<button type="button" class="btn btn-primary" onclick="fPendingClick(this)">Pending</button>
+	<button type="button" class="btn btn-secondary" onclick="fScheduledClick(this)">Scheduled</button>
   </div>
 </div>
   
@@ -72,6 +72,12 @@
 		document.getElementById("savedValue").innerHTML = obj.parentNode.id;
 		modal.style.display = "block";
 	} 
+	
+	function fUrgentClick(obj) {			
+		document.getElementById("savedValue").innerHTML = obj.parentNode.id;
+		modal.style.display = "block";
+	}
+	
 </script>
 <script>
 	//bien item id
