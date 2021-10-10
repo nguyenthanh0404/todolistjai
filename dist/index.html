@@ -12,9 +12,6 @@
   <h1>My To-Do List</h1>
   <div class="items" id="items">
 	<input type="text" name="Task" placeholder="Task" id="InputTask">
-    <input id="item1" type="checkbox" class="addPending">
-    <label id="lbitem1" for="item1" class="addPending">Create a to-do list <a class="lbdelete" onclick="fdelete(this)">Delete</a><a class="lbdelete">/</a><a class="lbmove" onclick="fmove(this)">Move</a></label>
-
 	<h2 class="urgent">1.Urgent</h2>
 	<h2 class="pending">3.Pending</h2>	
 	<h2 class="schedule">5.Scheduled</h2>
@@ -32,7 +29,7 @@
 </script>
 <script>
 	//bien item id
-	count = 2;
+	count = 1;
   window.addEventListener("keydown", function (e) { if (13 == e.keyCode) { 
 	// get value input
     x = document.getElementById("InputTask").value;
