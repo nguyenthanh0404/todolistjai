@@ -139,18 +139,6 @@ body {
   counter-increment: pending-items;
 }
 
-/*delete task*/
-.todoList label.deleteTask {
-  -webkit-order: 11;
-  order: 11;
-  -moz-animation: done 0.6s;
-  -webkit-animation: done 0.6s;
-  animation: done 0.6s;
-  counter-increment: done-items;
-}
-.todoList .hide{
-	display: none;
-}
 
 .todoList label.addPending:hover {
   background: rgba(255, 255, 255, 0.4);
