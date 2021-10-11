@@ -45,7 +45,7 @@ body {
   -webkit-flex-direction: column;
   flex-direction: column;
   padding: 20px;
-  counter-reset: urgent-items schedule-items done-items pending-items;
+  counter-reset: pending-items; /*urgent-items schedule-items done-items */
 }
 .todoList h2 {
   margin: 0;
@@ -107,8 +107,15 @@ body {
   content: counter(done-items);
 }
 
-
 .todoList input.addPending {
+  position: absolute;
+  left: -999px;
+}
+.todoList input.toUrgent {
+  position: absolute;
+  left: -999px;
+}
+.todoList input.toSchedule {
   position: absolute;
   left: -999px;
 }
@@ -129,8 +136,32 @@ body {
   content: "";
 }
 
+.todoList input.toUrgent:checked + label {
+  -webkit-order: 8;
+  order: 8;
+  -moz-animation: done 0.6s;
+  -webkit-animation: done 0.6s;
+  animation: done 0.6s;
+  counter-increment: done-items;
+}
+.todoList input.toUrgent:checked + label::before {
+  content: "";
+}
+
+.todoList input.toSchedule:checked + label {
+  -webkit-order: 8;
+  order: 8;
+  -moz-animation: done 0.6s;
+  -webkit-animation: done 0.6s;
+  animation: done 0.6s;
+  counter-increment: done-items;
+}
+.todoList input.toSchedule:checked + label::before {
+  content: "";
+}
+
 /*add new task*/
-.addPending{ 
+.todoList .addPending + label{  /**/
   -webkit-order: 4; 
   order: 4;
   -moz-animation: pending 0.6s;
@@ -163,6 +194,20 @@ body {
   counter-increment: urgent-items;
 }
 
+.toSchedule{ 
+  -webkit-order: 6; 
+  order: 6;
+  -moz-animation: pending 0.6s;
+  -webkit-animation: pending 0.6s;
+  animation: pending 0.6s;
+  display: block;
+  position: relative;
+  padding: 10px 0 10px 40px;
+  border-top: dashed 1px #fff;
+  cursor: pointer;
+  counter-increment: urgent-items;
+}
+
 
 .todoList label:hover {
   background: rgba(255, 255, 255, 0.4);
@@ -175,10 +220,12 @@ body {
   left: 10px;
   top: 8px;
 }
-.todoList label.s1{
+
+.todoList label.s1::before {
   color: red;
 }
-.todoList label.s2{
+
+.todoList label.s2::before {
   color: orange;
 }
 
@@ -187,6 +234,7 @@ body {
   color: #fff;
   text-decoration: underline;
 }
+
 .lbdelete:hover {
   color: red;
 }

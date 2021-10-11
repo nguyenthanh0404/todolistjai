@@ -70,16 +70,39 @@
 	} 
 	function fmove(obj) {
 		document.getElementById("savedValue").innerHTML = obj.parentNode.id;
-		document.getElementById("savedClass").innerHTML = obj.parentNode.className;
-		modal.style.display = "block";
+		document.getElementById("savedClass").innerHTML = obj.parentNode.className.substr(3,obj.parentNode.className.length);
+		
+		modal.style.display = "block";		 
 	} 
 	function fUrgentClick(obj) {
 		var parentID = document.getElementById("savedValue").innerHTML;		
 		var classID = document.getElementById("savedClass").innerHTML;	
-		document.getElementById(parentID).classList.add("toUrgent");
-		document.getElementById(parentID.substr(2,10)).classList.add("toUrgent");
 		document.getElementById(parentID).classList.remove(classID);
 		document.getElementById(parentID.substr(2,10)).classList.remove(classID);
+		document.getElementById(parentID).classList.add("toUrgent");
+		document.getElementById(parentID.substr(2,10)).classList.add("toUrgent");	
+		if(document.getElementById(parentID.substr(2,10)).checked){document.getElementById(parentID.substr(2,10)).checked = false;}			
+		modal.style.display = "none";
+	}	
+	function fPendingClick(obj) {		
+		var parentID = document.getElementById("savedValue").innerHTML;		
+		var classID = document.getElementById("savedClass").innerHTML;			
+		document.getElementById(parentID).classList.remove(classID);
+		document.getElementById(parentID.substr(2,10)).classList.remove(classID);
+		document.getElementById(parentID).classList.add("addPending");
+		document.getElementById(parentID.substr(2,10)).classList.add("addPending");		
+		if(document.getElementById(parentID.substr(2,10)).checked){document.getElementById(parentID.substr(2,10)).checked = false;}		
+		modal.style.display = "none";		
+	}
+	function fScheduledClick(obj) {
+		var parentID = document.getElementById("savedValue").innerHTML;		
+		var classID = document.getElementById("savedClass").innerHTML;	
+		document.getElementById(parentID).classList.remove(classID);
+		document.getElementById(parentID.substr(2,10)).classList.remove(classID);
+		document.getElementById(parentID).classList.add("toSchedule");
+		document.getElementById(parentID.substr(2,10)).classList.add("toSchedule");		
+		if(document.getElementById(parentID.substr(2,10)).checked){document.getElementById(parentID.substr(2,10)).checked = false;}	
+		modal.style.display = "none";
 	}
 	
 	
@@ -96,13 +119,13 @@
 	    var inputTask = document.createElement("INPUT");
 	    inputTask.setAttribute("id", "item"+count);
 	    inputTask.setAttribute("type", "checkbox");
-	    inputTask.setAttribute("class", "addPending");	
-	    document.getElementById("items").appendChild(inputTask);
+		inputTask.setAttribute("class", "addPending");
+	    document.getElementById("items").appendChild(inputTask);		
 		//create Label element
 	    var labelTask = document.createElement("LABEL");
 	    labelTask.setAttribute("for", "item"+count);
-			labelTask.setAttribute("class", "addPending s"+priorityTask);
-			labelTask.setAttribute("id", "lbitem1");
+			labelTask.setAttribute("class", "s"+priorityTask+" addPending");
+			labelTask.setAttribute("id", "lbitem"+count);
 			//create a Delete
 			var deleteTask = document.createElement("A");
 	    deleteTask.setAttribute("onclick", "fdelete(this)");
@@ -145,10 +168,10 @@
 <script>
 //modal script
 var modal = document.getElementById("myModal");
-window.onclick = function(event) {
+/*window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
-}
+}*/
 </script>
 </html>
