@@ -78,6 +78,18 @@
 </body>
 
 <script>
+	function getAllData() {	
+		var jsonTotalItems = {};
+		var totalItems = (document.getElementById("items").childElementCount-5)/2;	
+		for(var i=1;i<=totalItems;i++){	
+		alert(document.getElementById("items"+i).checked);
+			jsonTotalItems[items] = {checknotcheck:document.getElementById("items"+i).checked,taskname:document.getElementById("lbitems"+i).innerHTML,classname:document.getElementById("lbitems"+i).classname}
+		}	
+		
+		alert(JSON.stringify(jsonTotalItems));
+		
+	}
+
 	function fdelete(obj) {	
 		document.getElementById("savedValue_DeleteTask").innerHTML = obj.parentNode.id;
 		document.getElementById("delete_task_name").innerHTML = document.getElementById(obj.parentNode.id).innerHTML.substring(0,document.getElementById(obj.parentNode.id).innerHTML.length-196)
