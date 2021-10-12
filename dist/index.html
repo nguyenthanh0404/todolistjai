@@ -40,25 +40,38 @@
 <div class="todoList">
   <h1>My To-Do List</h1>
   <div class="items" id="items">
-		<input type="text" name="Task" placeholder="Task" id="InputTask">
-		<!-- -->
-		<!-- <input id="item1" type="checkbox" class="addPending"> -->
-	  <!-- <label id="lbitem1" for="item1" class="addPending s2">Create a to-do list <a class="lbdelete" onclick="fdelete(this)">Delete</a><a class="lbdelete">/</a><a class="lbmove" onclick="fmove(this)">Move</a></label> -->
-		<h2 class="urgent">1.Urgent</h2>
-		<h2 class="pending">3.Pending</h2>	
-		<h2 class="schedule">5.Scheduled</h2>
-	  <h2 class="done">7.Done</h2>
+		<input type="text" name="Task" placeholder="Priority(1,2,3) TaskName or TaskName" id="InputTask">
+		<!-- 
+		 <input id="item1" type="checkbox" class="addPending"> 
+	  <label id="lbitem1" for="item1" class="s2 addPending">Create a to-do list <a class="lbdelete" onclick="fdelete(this)">Delete</a><a class="lbdelete">/</a><a class="lbmove" onclick="fmove(this)">Move</a></label> -->
+	  
+		<h2 class="Lurgent">1.Urgent</h2>
+		<h2 class="Lpending">5.Pending</h2>	
+		<h2 class="Lschedule">9.Scheduled</h2>
+		<h2 class="Ldone">13.Done <a style="cursor: pointer;" id="showtabdoneButton" onclick="fshowtabdone()">(Show ▼)</a></h2>
   </div>
 </div>
 <!-- partial -->
 <!-- The Modal -->
-<div id="myModal" class="modal">
+<div id="myModal_move_where" class="modal">
   <!-- Modal content -->
   <div class="modal-content">    
-    <div>Move to</div><p id="savedValue"></p><p id="savedClass"></p>
+    <div>Move to</div><p style="display:none" id="savedValue"></p><p style="display:none" id="savedClass"></p>
 	<button type="button" class="btn btn-danger" onclick="fUrgentClick(this)">Urgent</button>
 	<button type="button" class="btn btn-primary" onclick="fPendingClick(this)">Pending</button>
 	<button type="button" class="btn btn-secondary" onclick="fScheduledClick(this)">Scheduled</button>
+  </div>
+</div>
+
+<div id="myModal_confirm_delete" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">    
+    <div>Delete this task? 
+		<p style="text-decoration:line-through;font-size:12px;" id="delete_task_name"></p>
+	</div>
+	<p style="display:none" id="savedValue_DeleteTask"></p>
+	<button type="button" class="btn btn-primary" onclick="fYesDeleteClicked()">Yes</button>
+	<button type="button" class="btn btn-danger" onclick="fNoDontDeleteClick()">No</button>	
   </div>
 </div>
   
@@ -66,13 +79,26 @@
 
 <script>
 	function fdelete(obj) {	
-		obj.parentNode.remove();	
-	} 
+		document.getElementById("savedValue_DeleteTask").innerHTML = obj.parentNode.id;
+		document.getElementById("delete_task_name").innerHTML = document.getElementById(obj.parentNode.id).innerHTML.substring(0,document.getElementById(obj.parentNode.id).innerHTML.length-196)
+		document.getElementById("myModal_confirm_delete").style.display = "block";	
+		//obj.parentNode.remove();	
+	}
+	function fYesDeleteClicked() {		
+		var parentID = document.getElementById("savedValue_DeleteTask").innerHTML;		
+		document.getElementById(parentID).remove();	
+		document.getElementById("myModal_confirm_delete").style.display = "none";
+	}
+	function fNoDontDeleteClick() {	
+	    var parentID = document.getElementById("savedValue_DeleteTask").innerHTML;		
+		if(document.getElementById(parentID.substr(2,10)).checked){document.getElementById(parentID.substr(2,10)).checked = false;}	
+		document.getElementById("myModal_confirm_delete").style.display = "none";	
+	}
+		
 	function fmove(obj) {
 		document.getElementById("savedValue").innerHTML = obj.parentNode.id;
-		document.getElementById("savedClass").innerHTML = obj.parentNode.className.substr(3,obj.parentNode.className.length);
-		
-		modal.style.display = "block";		 
+		document.getElementById("savedClass").innerHTML = obj.parentNode.className.substr(3,obj.parentNode.className.length);		
+		document.getElementById("myModal_move_where").style.display = "block";		 
 	} 
 	function fUrgentClick(obj) {
 		var parentID = document.getElementById("savedValue").innerHTML;		
@@ -82,7 +108,7 @@
 		document.getElementById(parentID).classList.add("toUrgent");
 		document.getElementById(parentID.substr(2,10)).classList.add("toUrgent");	
 		if(document.getElementById(parentID.substr(2,10)).checked){document.getElementById(parentID.substr(2,10)).checked = false;}			
-		modal.style.display = "none";
+		document.getElementById("myModal_move_where").style.display = "none";
 	}	
 	function fPendingClick(obj) {		
 		var parentID = document.getElementById("savedValue").innerHTML;		
@@ -92,7 +118,7 @@
 		document.getElementById(parentID).classList.add("addPending");
 		document.getElementById(parentID.substr(2,10)).classList.add("addPending");		
 		if(document.getElementById(parentID.substr(2,10)).checked){document.getElementById(parentID.substr(2,10)).checked = false;}		
-		modal.style.display = "none";		
+		document.getElementById("myModal_move_where").style.display = "none";		
 	}
 	function fScheduledClick(obj) {
 		var parentID = document.getElementById("savedValue").innerHTML;		
@@ -102,25 +128,62 @@
 		document.getElementById(parentID).classList.add("toSchedule");
 		document.getElementById(parentID.substr(2,10)).classList.add("toSchedule");		
 		if(document.getElementById(parentID.substr(2,10)).checked){document.getElementById(parentID.substr(2,10)).checked = false;}	
-		modal.style.display = "none";
+		document.getElementById("myModal_move_where").style.display = "none";
 	}
 	
+	function fshowtabdone() {	
+		var totalItems = (document.getElementById("items").childElementCount-5)/2;	
+		var	anyDoneTask = false;	
+		for(var i=1;i<=totalItems;i++){	
+			if(document.getElementById("item"+i).checked){
+				anyDoneTask=true;		
+			}
+		}
+		
+		if(anyDoneTask){
+			for(var i=1;i<=totalItems;i++){		
+				if(document.getElementById("showtabdoneButton").innerHTML=='(Show ▼)'){					
+					//show	
+					if(document.getElementById("item"+i).checked){
+						document.getElementById("lbitem"+i).style.visibility='visible';					
+					}
+					document.getElementById("showtabdoneButton").innerHTML = '(Hide ▲)';
+				}else{
+					//hide	
+					if(document.getElementById("item"+i).checked){
+						document.getElementById("lbitem"+i).style.visibility='hidden';
+					}			
+					document.getElementById("showtabdoneButton").innerHTML = '(Show ▼)';
+				}
+			}
+		}		
+	}
 	
 </script>
 <script>
 	//bien item id
 	count = 1;
-  window.addEventListener("keydown", function (e) { if (13 == e.keyCode) { 
+  window.addEventListener("keydown", function (e) { if (13 == e.keyCode) { 	 
 		// get value input
 	    a = document.getElementById("InputTask").value;
+		if(a==''){return false;}
 	    priorityTask = a.substring(0, 1); 
-	    x = a.substring(2); 
+		theSecondLetter = a.substring(1, 2); 		
+		if(typeof Number(priorityTask) == 'number' && theSecondLetter == ' '){
+			if(priorityTask>3){priorityTask=3;}
+			x = a.substring(2); 
+		}else{
+			priorityTask=3;
+			x = a; 
+		}
+	    
 		//create Input element
 	    var inputTask = document.createElement("INPUT");
 	    inputTask.setAttribute("id", "item"+count);
 	    inputTask.setAttribute("type", "checkbox");
 		inputTask.setAttribute("class", "addPending");
-	    document.getElementById("items").appendChild(inputTask);		
+	    //document.getElementById("items").appendChild(inputTask);	
+		document.getElementById("items").insertBefore(inputTask, document.getElementById("items").childNodes[document.getElementById("items").childElementCount-4]);		
 		//create Label element
 	    var labelTask = document.createElement("LABEL");
 	    labelTask.setAttribute("for", "item"+count);
@@ -130,17 +193,20 @@
 			var deleteTask = document.createElement("A");
 	    deleteTask.setAttribute("onclick", "fdelete(this)");
 			deleteTask.setAttribute("class", "lbdelete");
+			deleteTask.setAttribute("style", "font-size:10px");
 			var textnodeDelete = document.createTextNode("Delete");
 			deleteTask.appendChild(textnodeDelete);
 			//create a dot
 			var dotTask = document.createElement("A");
 			dotTask.setAttribute("class", "lbdelete");
+			dotTask.setAttribute("style", "font-size:10px");
 			var textnodeDot = document.createTextNode("/");
 			dotTask.appendChild(textnodeDot);	
 			//create a Move
 			var moveTask = document.createElement("A");
 	    moveTask.setAttribute("onclick", "fmove(this)");
 			moveTask.setAttribute("class", "lbmove");
+			moveTask.setAttribute("style", "font-size:10px");
 			var textnodeMove = document.createTextNode("Move");
 			moveTask.appendChild(textnodeMove);	
 	    var textnode = document.createTextNode(x);
@@ -149,7 +215,8 @@
 	    labelTask.appendChild(deleteTask);
 	    labelTask.appendChild(dotTask);
 	    labelTask.appendChild(moveTask);
-	    document.getElementById("items").appendChild(labelTask);
+	    //document.getElementById("items").appendChild(labelTask);
+		document.getElementById("items").insertBefore(labelTask, document.getElementById("items").childNodes[document.getElementById("items").childElementCount-4]);	
 	   //create a Delete
 
 
